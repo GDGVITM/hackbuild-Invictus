@@ -72,13 +72,12 @@ def generate_campaign_endpoint(request: CampaignRequest):
     )
     return response
 
-# --- NEW: Endpoint for Competitor Discovery ---
+# --- UPDATED: Endpoint for Competitor Discovery with Mock Data Fallback ---
 @app.post("/api/discover-competitors")
 def discover_competitors(product: ProductDescription):
     if not groq_client:
         return {"error": "Groq client not initialized."}
     
-    # Use Groq to extract a simple search term from the user's description
     chat_completion = groq_client.chat.completions.create(
         messages=[
             {"role": "system", "content": "You are a helpful assistant. Extract the single most relevant 2-3 word search query from the following product description. Respond with ONLY the search query and nothing else."},
@@ -90,23 +89,29 @@ def discover_competitors(product: ProductDescription):
 
     print(f"Extracted search term: '{search_term}'")
     
-    # Use the live connector to find ads based on the extracted search term
     live_ads = meta_connector.get_ads(search_term=search_term)
     
-    # Create a unique list of competitor names
     competitors: Set[str] = set(ad.competitor_name for ad in live_ads if ad.competitor_name != 'N/A')
     
+    # --- FALLBACK LOGIC ---
+    # If the live API returns no competitors, use competitors from our mock data.
+    if not competitors:
+        print("Live API returned no competitors. Using mock data for fallback.")
+        mock_ads = google_connector.get_ads() # Load mock ads
+        # Extract unique competitor names from the mock data
+        competitors = set(ad.competitor_name for ad in mock_ads if ad.competitor_name != 'N/A')
+
     return {"search_term": search_term, "competitors": list(competitors)}
 
 # --- UPDATED: Endpoint to Fetch Ads (Now uses Live Data for Meta) ---
 @app.get("/api/competitor-ads/{competitor_name}", response_model=List[StandardAd])
 def get_competitor_ads(competitor_name: str):
-    print(f"Fetching LIVE ads for competitor: {competitor_name}")
+    print(f"Fetching ads for competitor: {competitor_name}")
 
-    # The meta_connector now requires a search term and fetches live data
+    # The meta_connector attempts to fetch live data
     meta_ads = meta_connector.get_ads(search_term=competitor_name)
     
-    # The google_connector still uses mock data
+    # The google_connector always provides reliable mock data
     google_ads = google_connector.get_ads()
 
     all_ads = meta_ads + google_ads
@@ -115,8 +120,5 @@ def get_competitor_ads(competitor_name: str):
 # --- DEPRECATED (for now): The alert check logic needs to be re-thought for live data ---
 @app.get("/api/check-for-new-ads", response_model=List[StandardAd])
 def check_for_new_ads():
-    # This feature was based on mock data. In a live system, you'd compare
-    # current ads against a database of previously seen ads.
-    # For now, we will return an empty list.
     print("Alert check endpoint called (currently disabled for live data).")
     return []

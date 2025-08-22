@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import AdCard from './components/AdCard';
 import Simulator from './components/Simulator';
 import Alerts from './components/Alerts';
-import Discovery from './components/Discovery'; // Import the new Discovery component
+import Discovery from './components/Discovery';
 import './App.css';
 
 function App() {
@@ -15,16 +15,12 @@ function App() {
   const [error, setError] = useState(null);
 
   // --- Handler Functions for User Actions ---
-
-  // Called from Discovery component when competitors are found
   const handleCompetitorsFound = (foundCompetitors) => {
     setCompetitors(foundCompetitors);
-    // Clear previous results when a new search is made
     setSelectedCompetitor(null);
     setAds([]);
   };
 
-  // Called from Discovery component when a competitor button is clicked
   const handleCompetitorSelected = async (competitorName) => {
     setSelectedCompetitor(competitorName);
     setLoading(true);
@@ -32,33 +28,31 @@ function App() {
     setAds([]);
 
     try {
-      // Step 1: Fetch the live ads for the selected competitor
       const adsResponse = await fetch(`http://127.0.0.1:8000/api/competitor-ads/${encodeURIComponent(competitorName)}`);
       if (!adsResponse.ok) throw new Error(`Failed to fetch ads for ${competitorName}`);
       let adsData = await adsResponse.json();
 
       if (adsData.length === 0) {
         setLoading(false);
-        return; // No ads to analyze
+        return;
       }
 
-      // Step 2: Analyze the text of the fetched ads
       const analysisPromises = adsData.map(ad =>
         fetch('http://127.0.0.1:8000/api/analyze-text', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: ad.body_text || '' }) // Handle empty body_text
+          body: JSON.stringify({ text: ad.body_text || '' })
         }).then(res => res.json())
       );
       const analysisResults = await Promise.all(analysisPromises);
 
-      // Step 3: Combine ad data with analysis results
       const enrichedAds = adsData.map((ad, index) => ({
         ...ad,
-        id: `${competitorName}-${index}`, // Create a unique key for each ad
+        id: `${competitorName}-${index}`,
         tone: analysisResults[index]?.detected_tone,
       }));
 
+      console.log("Final data to be displayed:", enrichedAds);
       setAds(enrichedAds);
 
     } catch (err) {
@@ -74,16 +68,12 @@ function App() {
         <h1>Competitor Ad Intelligence</h1>
       </header>
       <main className="main-content">
-        {/* The Discovery component is always visible and drives the flow */}
         <Discovery
           onCompetitorsFound={handleCompetitorsFound}
           onCompetitorSelected={handleCompetitorSelected}
         />
 
-        {/* The Simulator is always available for creative ideation */}
-        <Simulator />
-
-        {/* --- Conditionally render the ad feed and alerts --- */}
+        {/* --- Conditionally render the results AFTER a competitor is selected --- */}
         {selectedCompetitor && (
           <>
             <Alerts />
@@ -108,6 +98,11 @@ function App() {
             {!loading && ads.length === 0 && !error && (
                <p className="info-message">No active ads found for this competitor.</p>
             )}
+
+            {/* --- MOVED SIMULATOR HERE --- */}
+            {/* It now appears after the ad feed, creating a logical flow */}
+            <h2 className="section-title">AI Strategy Simulator</h2>
+            <Simulator />
           </>
         )}
       </main>
