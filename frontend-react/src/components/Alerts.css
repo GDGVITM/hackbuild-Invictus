@@ -1,0 +1,43 @@
+/* src/components/Alerts.css */
+.alerts-container {
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.alerts-container button {
+  background-color: #4f46e5;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.alerts-container button:hover {
+  background-color: #4338ca;
+}
+
+.alerts-container button:disabled {
+  background-color: #a5b4fc;
+  cursor: not-allowed;
+}
+
+.notification-toast {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 6px;
+  background-color: #ecfdf5;
+  color: #065f46;
+  font-weight: 500;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

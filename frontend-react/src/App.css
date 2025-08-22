@@ -1,0 +1,49 @@
+/* src/App.css */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa; /* A lighter, cleaner background */
+  color: #343a40; /* A softer black for better readability */
+}
+
+.app {
+  padding: 32px;
+  max-width: 1280px; /* max-w-7xl */
+  margin: 0 auto;
+}
+
+.app-header h1 {
+  font-size: 2rem; /* Slightly reduced for a more modern feel */
+  font-weight: 700;
+  color: #212529;
+  margin-bottom: 24px;
+}
+
+/* NEW: Adds vertical "breathing room" between main sections */
+.main-content > * {
+  margin-bottom: 2.5rem; 
+}
+
+.ad-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.error-message {
+  text-align: center;
+  color: #9ca3af;
+  margin-top: 40px;
+}
+
+.section-title {
+    margin-top: 40px;
+    font-size: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+}

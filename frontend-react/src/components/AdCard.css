@@ -1,0 +1,104 @@
+/* src/components/AdCard.css */
+.ad-card {
+  background-color: white;
+  border-radius: 12px; /* Softer corners */
+  border: 1px solid #e9ecef; /* A subtle border for a cleaner look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* A much lighter, more modern shadow */
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ad-card:hover {
+  transform: translateY(-5px); /* A "lift" effect on hover is cleaner than scaling */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* A slightly stronger shadow on hover */
+}
+
+.ad-card-image-container {
+  position: relative;
+}
+
+.ad-card-image {
+  width: 100%;
+  height: 192px; /* 12rem or h-48 */
+  object-fit: cover;
+}
+
+.platform-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.platform-meta { background-color: #1877F2; } /* Facebook Blue */
+.platform-google { background-color: #DB4437; } /* Google Red */
+
+.ad-card-content {
+  padding: 16px;
+}
+
+.ad-card-headline {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ad-card-body {
+  color: #4b5563;
+  font-size: 14px;
+  margin-bottom: 16px;
+  height: 80px; /* Equivalent to h-20 */
+  overflow: hidden;
+}
+
+.ad-card-cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: #1f2937;
+  color: white;
+  font-weight: bold;
+  padding: 8px 0;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.ad-card-cta:hover {
+  background-color: #374151;
+}
+
+.ai-insight-tag {
+  background-color: #eef2ff; /* A light indigo color */
+  color: #4338ca; /* A darker indigo color */
+  padding: 4px 8px;
+  border-radius: 9999px; /* A pill shape */
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.ad-card-skeleton {
+  background-color: #e5e7eb; /* light gray */
+  border-radius: 8px;
+  height: 320px; /* Match the approximate height of a real card */
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
