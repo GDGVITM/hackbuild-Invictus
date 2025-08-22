@@ -1,0 +1,183 @@
+{
+  "shoes": [
+    {
+      "brand_name": "Nike",
+      "ads": [
+        {
+          "headline": "Nike Air Zoom: Feel the Air.",
+          "body_text": "Engineered to the exact specifications of championship athletes. Experience the responsive cushioning that keeps you going, mile after mile.",
+          "image_url": "https://res.cloudinary.com/dtaz6l4nb/image/upload/v1755861143/NIKE_FULL_FORCE_LO_ksoddz.avif",
+          "cta_text": "Shop Now"
+        },
+        {
+          "headline": "Just Do It. Our Biggest Sale.",
+          "body_text": "Don't wait for greatness. Achieve it now with up to 40% off our entire running collection. Limited time only.",
+          "image_url": "https://res.cloudinary.com/dtaz6l4nb/image/upload/v1755861218/360_F_610270204_4caPs2ahuPak18PVqDgXU38eb4Wz8Nnu_rhdxxz.jpg",
+          "cta_text": "Shop Sale"
+        }
+      ]
+    },
+    {
+      "brand_name": "Adidas",
+      "ads": [
+        {
+          "headline": "Impossible is Nothing.",
+          "body_text": "From the stadium to the streets, our latest collection is designed for peak performance and ultimate style. Discover the new Ultraboost.",
+          "image_url": "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=500",
+          "cta_text": "Explore Collection"
+        }
+      ]
+    },
+    {
+      "brand_name": "Puma",
+      "ads": [
+        {
+          "headline": "Forever Faster.",
+          "body_text": "Break records and turn heads with the new Deviate NITRO 2. The perfect blend of speed, style, and comfort.",
+          "image_url": "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=500",
+          "cta_text": "Learn More"
+        }
+      ]
+    }
+  ],
+  "shirts": [
+    {
+      "brand_name": "Allen Solly",
+      "ads": [
+        {
+          "headline": "Friday Dressing, Redefined.",
+          "body_text": "Look sharp, feel comfortable. Our new collection of premium linen shirts is perfect for the modern professional.",
+          "image_url": "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500",
+          "cta_text": "Discover More"
+        }
+      ]
+    },
+    {
+      "brand_name": "Peter England",
+      "ads": [
+        {
+          "headline": "The Honest Shirt. An Honest Price.",
+          "body_text": "Crafted for the discerning gentleman. Experience timeless style and impeccable quality with our new formal wear collection.",
+          "image_url": "https://images.unsplash.com/photo-1598032895397-b9472444bf93?w=500",
+          "cta_text": "Shop Formals"
+        }
+      ]
+    },
+    {
+      "brand_name": "Max Fashion",
+      "ads": [
+        {
+          "headline": "Style for Every Story.",
+          "body_text": "Update your wardrobe with the latest trends without breaking the bank. Fresh styles arriving weekly. Get yours today!",
+          "image_url": "https://images.unsplash.com/photo-1523381294911-8d3cead13475?w=500",
+          "cta_text": "Find a Store"
+        }
+      ]
+    }
+  ],
+  "smartphones": [
+    {
+      "brand_name": "Apple",
+      "ads": [
+        {
+          "headline": "iPhone 16 Pro. It's a leap year.",
+          "body_text": "The most powerful camera in a smartphone. A stunningly bright display. And A19 Pro, the chip that's an absolute beast. Pre-order yours now.",
+          "image_url": "https://res.cloudinary.com/dtaz6l4nb/image/upload/v1755861620/iPhone_16_Pro_Desert_Titanium_PDP_Image_Position_5__en-IN_0674b640-dd4a-41ab-93e8-df1fe5754024_gcp01w.webp",
+          "cta_text": "Pre-Order Now"
+        }
+      ]
+    },
+    {
+      "brand_name": "Samsung",
+      "ads": [
+        {
+          "headline": "Welcome to the Era of Mobile AI.",
+          "body_text": "Unleash new levels of creativity and productivity with the new Galaxy S25, powered by Galaxy AI. Circle to Search, Live Translate, and more.",
+          "image_url": "https://res.cloudinary.com/dtaz6l4nb/image/upload/v1755861747/galaxy-s25-ultra-photo-from-technizo-concept_dzpgg9.webp",
+          "cta_text": "Buy Now"
+        }
+      ]
+    },
+    {
+        "brand_name": "Google Pixel",
+        "ads": [
+          {
+            "headline": "The only phone engineered by Google.",
+            "body_text": "Pixel 9's AI-powered camera makes every photo a masterpiece. Magic Eraser, Photo Unblur, and the most secure experience yet.",
+            "image_url": "https://res.cloudinary.com/dtaz6l4nb/image/upload/v1755861825/Google-Pixel-9-Series-SOURCE-Julian-Chokkattu_zhirwn.webp",
+            "cta_text": "Learn More"
+          }
+        ]
+      }
+  ],
+  "coffee": [
+    {
+      "brand_name": "Starbucks",
+      "ads": [
+        {
+          "headline": "Your Summer Daydream, Delivered.",
+          "body_text": "Cool down with our new Iced Brown Sugar Oatmilk Shaken Espresso. The perfect summer escape in every sip.",
+          "image_url": "https://res.cloudinary.com/dtaz6l4nb/image/upload/v1755861928/Starbucks_Menu_Delhi_vv0zwy.jpg",
+          "cta_text": "Order Ahead"
+        }
+      ]
+    },
+    {
+      "brand_name": "Nescafé",
+      "ads": [
+        {
+          "headline": "Make your world.",
+          "body_text": "Start your day with the rich aroma and unmistakable taste of Nescafé Classic. The perfect cup, every time.",
+          "image_url": "https://res.cloudinary.com/dtaz6l4nb/image/upload/v1755862037/644731eef87f630d9b2db2b0-nescafe-clasico-instant-coffee-1-7-oz_modbyx.jpg",
+          "cta_text": "Find a Retailer"
+        }
+      ]
+    },
+    {
+      "brand_name": "Blue Tokai Coffee",
+      "ads": [
+        {
+          "headline": "India's Finest Specialty Coffee.",
+          "body_text": "Sourced from the best estates and roasted fresh every day. Experience the difference that real, high-quality coffee makes.",
+          "image_url": "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?w=500",
+          "cta_text": "Shop Roasts"
+        }
+      ]
+    }
+  ],
+  "cars": [
+    {
+      "brand_name": "Tata Motors",
+      "ads": [
+        {
+          "headline": "The New Tata Nexon EV. Redefining Electric.",
+          "body_text": "With a stunning new design, a futuristic digital cockpit, and an extended range, the future of mobility is here. Test drive today.",
+          "image_url": "https://res.cloudinary.com/dtaz6l4nb/image/upload/v1755862093/curvv-5-1022x555-new_yerluz.jpg",
+          "cta_text": "Book a Test Drive"
+        }
+      ]
+    },
+    {
+      "brand_name": "Maruti Suzuki",
+      "ads": [
+        {
+          "headline": "The New FRONX. More Thrill, More Miles.",
+          "body_text": "India's most loved hatchback is back with a sporty new look and an incredibly fuel-efficient engine. Drive the legend.",
+          "image_url": "https://res.cloudinary.com/dtaz6l4nb/image/upload/v1755862183/maruti-suzuki-fronx-500x261_ezzqyv.jpg",
+          "cta_text": "Explore Features"
+        }
+      ]
+    },
+    {
+      "brand_name": "Mercedes",
+      "ads": [
+        {
+          "headline": "The Ultimate Driving Machine.",
+          "body_text": "Unleash pure performance. The new Mercedes SE combines breathtaking power with everyday usability. Experience sheer driving pleasure.",
+          "image_url": "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=500",
+          "cta_text": "Configure Yours"
+        }
+      ]
+    }
+  ]
+}

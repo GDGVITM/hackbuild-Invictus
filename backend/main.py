@@ -1,35 +1,18 @@
 # backend/main.py
-
 from fastapi import FastAPI
 from typing import List, Set
 from models import StandardAd
-from connectors import meta_connector, google_connector
-from fastapi.middleware.cors import CORSMiddleware
-import json
 import os
-from dotenv import load_dotenv
 
-# Import the new modules needed for the AI endpoints
 from pydantic import BaseModel
 from analysis_service import analyze_ad_text, generate_campaign_idea
-from groq import Groq
+from mock_db_service import get_competitors_by_term, get_ads_by_brand # Import new service
 
-load_dotenv()
 app = FastAPI()
 
-# --- Initialize Groq Client for Keyword Extraction ---
-try:
-    groq_client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
-except Exception as e:
-    print(f"Error initializing Groq client: {e}")
-    groq_client = None
-
-
-# Add CORS middleware
-origins = [
-    "http://localhost:3000",
-    "http://localhost",
-]
+# --- Add CORS middleware ---
+from fastapi.middleware.cors import CORSMiddleware
+origins = ["http://localhost:3000", "http://localhost"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -38,87 +21,47 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # --- Define Request Body Models ---
 class AdText(BaseModel):
     text: str
-
 class CampaignRequest(BaseModel):
     product_description: str
     tone: str
     style: str
-
 class ProductDescription(BaseModel):
     description: str
-
 
 # --- API Endpoints ---
 @app.post("/api/analyze-text")
 def analyze_text_endpoint(ad_text: AdText):
-    result = analyze_ad_text(ad_text.text)
-    return result
+    return analyze_ad_text(ad_text.text)
 
 @app.post("/api/generate-campaign")
 def generate_campaign_endpoint(request: CampaignRequest):
-    mock_competitor_context = [{
-        "headline": "Step Into Comfort.",
-        "body_text": "Discover the revolutionary cushion technology in our new runner series."
-    }]
+    mock_context = get_ads_by_brand("Nike") # Use Nike as an example context
     response = generate_campaign_idea(
         product_description=request.product_description,
         tone=request.tone,
         style=request.style,
-        competitor_ads=mock_competitor_context
+        competitor_ads=[ad.dict() for ad in mock_context]
     )
     return response
 
-# --- UPDATED: Endpoint for Competitor Discovery with Mock Data Fallback ---
+# --- UPDATED: Endpoint for Competitor Discovery using Mock DB ---
 @app.post("/api/discover-competitors")
 def discover_competitors(product: ProductDescription):
-    if not groq_client:
-        return {"error": "Groq client not initialized."}
-    
-    chat_completion = groq_client.chat.completions.create(
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant. Extract the single most relevant 2-3 word search query from the following product description. Respond with ONLY the search query and nothing else."},
-            {"role": "user", "content": product.description},
-        ],
-        model="llama3-8b-8192",
-    )
-    search_term = chat_completion.choices[0].message.content.strip().replace('"', '')
+    print(f"Discovering competitors for: '{product.description}'")
+    competitors = get_competitors_by_term(product.description)
+    return {"search_term": product.description, "competitors": competitors}
 
-    print(f"Extracted search term: '{search_term}'")
-    
-    live_ads = meta_connector.get_ads(search_term=search_term)
-    
-    competitors: Set[str] = set(ad.competitor_name for ad in live_ads if ad.competitor_name != 'N/A')
-    
-    # --- FALLBACK LOGIC ---
-    # If the live API returns no competitors, use competitors from our mock data.
-    if not competitors:
-        print("Live API returned no competitors. Using mock data for fallback.")
-        mock_ads = google_connector.get_ads() # Load mock ads
-        # Extract unique competitor names from the mock data
-        competitors = set(ad.competitor_name for ad in mock_ads if ad.competitor_name != 'N/A')
-
-    return {"search_term": search_term, "competitors": list(competitors)}
-
-# --- UPDATED: Endpoint to Fetch Ads (Now uses Live Data for Meta) ---
+# --- UPDATED: Endpoint to Fetch Ads from Mock DB ---
 @app.get("/api/competitor-ads/{competitor_name}", response_model=List[StandardAd])
 def get_competitor_ads(competitor_name: str):
-    print(f"Fetching ads for competitor: {competitor_name}")
+    print(f"Fetching mock ads for competitor: {competitor_name}")
+    ads = get_ads_by_brand(competitor_name)
+    return ads
 
-    # The meta_connector attempts to fetch live data
-    meta_ads = meta_connector.get_ads(search_term=competitor_name)
-    
-    # The google_connector always provides reliable mock data
-    google_ads = google_connector.get_ads()
-
-    all_ads = meta_ads + google_ads
-    return all_ads
-
-# --- DEPRECATED (for now): The alert check logic needs to be re-thought for live data ---
+# --- This endpoint is no longer needed with the new mock system ---
 @app.get("/api/check-for-new-ads", response_model=List[StandardAd])
 def check_for_new_ads():
-    print("Alert check endpoint called (currently disabled for live data).")
     return []
