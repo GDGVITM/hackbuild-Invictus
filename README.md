@@ -100,6 +100,3 @@ cd frontend-react
 npm start
 
 Open your browser to http://localhost:3000.
-
-🏆 Hackathon
-This project was developed for the GDGVITM Hackbuild 2.0 Hackathon.
