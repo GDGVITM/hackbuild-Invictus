@@ -1,0 +1,27 @@
+[
+  {
+    "platform": "Meta",
+    "advertiser": "SoleStride Shoes",
+    "headline": "Step Into Comfort.",
+    "adText": "Discover the revolutionary cushion technology in our new runner series. Shop now for 20% off!",
+    "imageUrl": "https://example.com/image_meta_1.jpg",
+    "callToAction": "Shop Now"
+  },
+  {
+    "platform": "Meta",
+    "advertiser": "SoleStride Shoes",
+    "headline": "Built to Last. Styled for You.",
+    "adText": "Our all-weather boots combine rugged durability with timeless design. Don't let the weather decide your day.",
+    "imageUrl": "https://example.com/image_meta_2.jpg",
+    "callToAction": "Learn More"
+  },
+  {
+    "platform": "Meta",
+    "advertiser": "SoleStride Shoes",
+    "headline": "⚡️ FLASH SALE: The Summer Collection! ⚡️",
+    "adText": "Limited time only! Get up to 40% off our entire summer sandal and sneaker collection. Don't wait, the best styles sell out fast!",
+    "imageUrl": "https://example.com/image_meta_3.jpg",
+    "callToAction": "Shop Flash Sale",
+    "is_new": true 
+  }
+]

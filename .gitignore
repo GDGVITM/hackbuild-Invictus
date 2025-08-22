@@ -1,0 +1,17 @@
+# Python / FastAPI
+venv/
+__pycache__/
+*.pyc
+
+# Node.js / React
+node_modules/
+.next/
+build/
+.DS_Store
+
+# Sensitive Files - VERY IMPORTANT
+.env
+*.env
+
+# IDE files
+.vscode/
