@@ -103,9 +103,6 @@ cd backend
 python -m venv venv
 source venv/bin/activate  # On Windows, use: venv\Scripts\activate
 
-# Install required packages
-pip install -r requirements.txt
-
 # Create a .env file from the example
 cp .env.example .env
 
