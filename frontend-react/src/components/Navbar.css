@@ -1,0 +1,38 @@
+/* src/components/Navbar.css */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.app-header h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: #212529;
+}
+
+.main-nav {
+  display: flex;
+  gap: 24px;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: #495057;
+  font-weight: 500;
+  padding: 8px 4px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-bottom-color 0.2s;
+}
+
+.main-nav a:hover {
+  color: #000;
+}
+
+.main-nav a.active {
+  color: #4f46e5; /* Primary accent color */
+  border-bottom-color: #4f46e5;
+}

@@ -7,7 +7,6 @@ import json
 from groq import Groq
 
 # --- Part 1: Existing Text Classifier (No changes here) ---
-
 classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
 
 def analyze_ad_text(text: str):
@@ -17,12 +16,11 @@ def analyze_ad_text(text: str):
     print(f"Analyzed text, top result is '{top_label}'")
     return {"detected_tone": top_label}
 
-# --- Part 2: Updated Campaign Generator (Using Groq) ---
+# --- Part 2: Updated Campaign Generator with Storyboard ---
 
 load_dotenv()
 
 try:
-    # Initialize the Groq client
     client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 except Exception as e:
     print(f"Error configuring Groq, please check your API key: {e}")
@@ -41,14 +39,15 @@ def generate_campaign_idea(product_description: str, tone: str, style: str, comp
         - Body: "{example_ad['body_text']}"
         """
 
-    # We are instructing the AI to respond in a specific JSON format.
+    # We are instructing the AI to respond with a new "video_storyboard" key
     system_prompt = """
-    You are an expert performance marketer. Your task is to generate a creative ad campaign.
-    You must respond with a valid JSON object with the following keys: "headlines", "body_copy", "visual_prompt", "reasoning".
+    You are an expert performance marketer and creative director.
+    You must respond with a valid JSON object with the following keys: "headlines", "body_copy", "visual_prompt", "reasoning", and "video_storyboard".
     - "headlines": An array of 3 catchy, unique headlines.
     - "body_copy": A single paragraph of compelling ad copy.
     - "visual_prompt": A descriptive prompt for a text-to-image AI.
     - "reasoning": An array of short strings explaining why this strategy is effective.
+    - "video_storyboard": An array of 3 objects, each representing a 1-second scene in a video ad. Each object must have two keys: "visual" (a description of the scene) and "overlay_text" (the text that appears on screen).
     """
     
     user_prompt = f"""
@@ -63,12 +62,12 @@ def generate_campaign_idea(product_description: str, tone: str, style: str, comp
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
             ],
-            model="llama3-8b-8192", # Using the Llama 3 model
+            model="llama3-8b-8192",
             temperature=0.7,
-            response_format={"type": "json_object"}, # This forces the model to return JSON
+            response_format={"type": "json_object"},
         )
         response_content = chat_completion.choices[0].message.content
-        return json.loads(response_content) # The response is already clean JSON
+        return json.loads(response_content)
     except Exception as e:
         print(f"Error during API call to Groq: {e}")
         return {"error": "An error occurred while generating the campaign with Groq."}

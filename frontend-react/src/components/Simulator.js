@@ -28,7 +28,6 @@ export default function Simulator() {
       setCampaign(data);
     } catch (error) {
       console.error("Failed to generate campaign:", error);
-      // You could set an error state here to show in the UI
     } finally {
       setIsLoading(false);
     }
@@ -38,7 +37,6 @@ export default function Simulator() {
     <div className="simulator-container">
       <h2>✨ AI Strategy Simulator</h2>
       <form onSubmit={generateCampaign}>
-        {/* The form section remains the same */}
         <div className="form-group">
           <label htmlFor="product">Product Description</label>
           <textarea id="product" value={product} onChange={(e) => setProduct(e.target.value)} rows="3"></textarea>
@@ -66,13 +64,12 @@ export default function Simulator() {
       </form>
 
       {isLoading && <div className="loader"></div>}
-      
+
       {campaign && (
         <div className="results-container">
           <h3>Generated Campaign</h3>
           <div className="result-section">
             <h4>Headlines</h4>
-            {/* FIX: Add optional chaining '?.' here */}
             <ul>{campaign.headlines?.map((h, i) => <li key={i}>{h}</li>)}</ul>
           </div>
           <div className="result-section">
@@ -80,12 +77,32 @@ export default function Simulator() {
             <p>{campaign.body_copy}</p>
           </div>
           <div className="result-section">
-            <h4>Visual Prompt for AI</h4>
+            <h4>Visual Prompt for AI Image</h4>
             <p className="prompt-text">{campaign.visual_prompt}</p>
           </div>
+
+          {/* --- NEW STORYBOARD SECTION --- */}
+          {campaign.video_storyboard && (
+            <div className="result-section">
+              <h4>🎬 3-Second Video Ad Storyboard</h4>
+              <div className="storyboard">
+                {campaign.video_storyboard.map((scene, i) => (
+                  <div key={i} className="scene">
+                    <div className="scene-number">Scene {i + 1}</div>
+                    <div className="scene-content">
+                      <strong>Visual:</strong> {scene.visual}
+                    </div>
+                    <div className="scene-content">
+                      <strong>Text Overlay:</strong> {scene.overlay_text}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="result-section reasoning">
             <h4>✅ Why This Works (AI Reasoning)</h4>
-            {/* FIX: Add optional chaining '?.' here */}
             <ul>{campaign.reasoning?.map((r, i) => <li key={i}>{r}</li>)}</ul>
           </div>
         </div>

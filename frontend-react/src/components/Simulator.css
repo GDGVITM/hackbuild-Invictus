@@ -1,11 +1,9 @@
 /* src/components/Simulator.css */
 .simulator-container {
-  background-color: white;
+  background-color: #ffffff;
   padding: 24px;
-  border-radius: 12px; /* Softer corners */
-  border: 1px solid #dee2e6; /* A subtle border instead of a heavy shadow */
-  box-shadow: none; /* Removing the shadow for a cleaner look */
-  margin-top: 40px;
+  border-radius: 12px;
+  border: 1px solid #dee2e6;
 }
 .simulator-container h2 {
   margin-top: 0;
@@ -16,38 +14,29 @@
 }
 .form-group { margin-bottom: 16px; }
 .form-group label { display: block; font-weight: 500; margin-bottom: 8px; color: #374151; }
-.form-group textarea, .form-group select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 1rem;
-}
+.form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 8px; font-size: 1rem; }
 .form-row { display: flex; gap: 16px; }
 .form-row .form-group { flex: 1; }
 .simulator-container button {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  font-weight: bold;
-  color: white;
-  background-color: #4f46e5; /* A more vibrant, modern button color */
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+  width: 100%; padding: 12px; font-size: 1rem; font-weight: bold; color: white; background-color: #4f46e5; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.2s;
 }
-.simulator-container button:hover {
-  background-color: #4338ca; /* A darker shade for hover */
-}
+.simulator-container button:hover { background-color: #4338ca; }
 .simulator-container button:disabled { background-color: #9ca3af; cursor: not-allowed; }
 
 .results-container { margin-top: 24px; }
-.result-section { margin-bottom: 16px; }
-.result-section h4 { margin-top: 0; margin-bottom: 8px; color: #1f2937; }
-.result-section ul { padding-left: 20px; margin: 0; }
-.result-section li { margin-bottom: 4px; }
-.prompt-text { background-color: #f3f4f6; border-left: 3px solid #6b7280; padding: 8px; font-style: italic; }
-.reasoning { background-color: #f0fdf4; border-left: 3px solid #22c55e; padding: 12px; }
-.loader { margin: 20px auto; border: 4px solid #f3f4f6; border-top: 4px solid #4f46e5; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
+.result-section { margin-bottom: 20px; }
+.result-section h4 { margin-top: 0; margin-bottom: 12px; color: #343a40; font-size: 1.1rem; }
+.result-section ul { padding-left: 20px; margin: 0; color: #495057; }
+.result-section p { color: #495057; line-height: 1.6; }
+.result-section li { margin-bottom: 8px; }
+.prompt-text { background-color: #f8f9fa; border-left: 4px solid #adb5bd; padding: 12px; font-style: italic; color: #495057; }
+.reasoning { background-color: #e6fcf5; border-left: 4px solid #10b981; padding: 16px; border-radius: 8px; }
+.loader { margin: 20px auto; border: 4px solid #e9ecef; border-top: 4px solid #4f46e5; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Storyboard styles from previous step */
+.storyboard { display: flex; gap: 16px; margin-top: 12px; }
+.scene { flex: 1; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 12px; }
+.scene-number { font-weight: bold; color: #4f46e5; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb; }
+.scene-content { font-size: 14px; line-height: 1.5; }
+.scene-content:not(:last-child) { margin-bottom: 8px; }

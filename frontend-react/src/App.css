@@ -6,26 +6,42 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f8f9fa; /* A lighter, cleaner background */
-  color: #343a40; /* A softer black for better readability */
+  background-color: #f8f9fa; /* Lighter, cleaner background */
+  color: #343a40; /* Softer black for text */
 }
 
 .app {
-  padding: 32px;
-  max-width: 1280px; /* max-w-7xl */
+  max-width: 1280px;
   margin: 0 auto;
+  padding: 1rem 2rem;
 }
 
-.app-header h1 {
-  font-size: 2rem; /* Slightly reduced for a more modern feel */
+.main-content {
+  width: 100%;
+}
+
+.page-title {
+  font-size: 2rem;
   font-weight: 700;
   color: #212529;
-  margin-bottom: 24px;
+  margin-bottom: 0.5rem;
 }
 
-/* NEW: Adds vertical "breathing room" between main sections */
-.main-content > * {
-  margin-bottom: 2.5rem; 
+.page-description {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  color: #6c757d;
+  font-size: 1.1rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #343a40;
+  margin-top: 3rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #dee2e6;
 }
 
 .ad-grid {
@@ -34,16 +50,11 @@ body {
   gap: 24px;
 }
 
-.error-message {
+.error-message, .info-message {
   text-align: center;
-  color: #9ca3af;
-  margin-top: 40px;
-}
-
-.section-title {
-    margin-top: 40px;
-    font-size: 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
-    padding-bottom: 16px;
-    margin-bottom: 24px;
+  color: #6c757d;
+  padding: 2rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
 }

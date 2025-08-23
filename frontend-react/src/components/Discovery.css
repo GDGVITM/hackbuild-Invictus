@@ -1,6 +1,6 @@
 /* src/components/Discovery.css */
 .discovery-container {
-  background-color: white;
+  background-color: #ffffff;
   padding: 24px;
   border-radius: 12px;
   border: 1px solid #dee2e6;
@@ -16,11 +16,12 @@
 }
 .discovery-container textarea {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
   font-size: 1rem;
   margin-bottom: 16px;
+  resize: vertical;
 }
 .discovery-container > button {
   width: 100%;
@@ -30,8 +31,12 @@
   color: white;
   background-color: #4f46e5;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.2s;
+}
+.discovery-container > button:hover {
+  background-color: #4338ca;
 }
 .competitor-results {
   margin-top: 24px;
@@ -50,9 +55,9 @@
   border-radius: 20px;
   cursor: pointer;
   font-weight: 500;
-  transition: background-color 0.2s, color 0.2s;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 }
 .competitor-button:hover {
-  background-color: #e9ecef;
-  color: #000;
+  background-color: #e2e6ea;
+  border-color: #adb5bd;
 }
