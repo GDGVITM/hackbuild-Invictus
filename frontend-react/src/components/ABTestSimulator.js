@@ -2,51 +2,48 @@
 import React, { useState } from 'react';
 import './ABTestSimulator.css';
 
-const AdInputColumn = ({ ad, setAd, title }) => (
+const AdInputColumn = ({ ad, updateAd, removeAd }) => (
   <div className="ad-column">
-    <h3>{title}</h3>
+    <div className="ad-column-header">
+      <h3>Variation {String.fromCharCode(65 + ad.index)}</h3>
+      <button onClick={() => removeAd(ad.id)} className="remove-btn">&times;</button>
+    </div>
     <div className="form-group">
       <label>Headline</label>
-      <input type="text" value={ad.headline} onChange={(e) => setAd({ ...ad, headline: e.target.value })} />
+      <input type="text" value={ad.headline} onChange={(e) => updateAd(ad.id, 'headline', e.target.value)} />
     </div>
     <div className="form-group">
       <label>Ad Text</label>
-      <textarea value={ad.body_text} onChange={(e) => setAd({ ...ad, body_text: e.target.value })} rows="4" />
+      <textarea value={ad.body_text} onChange={(e) => updateAd(ad.id, 'body_text', e.target.value)} rows="4" />
     </div>
     <div className="form-group">
       <label>Call to Action</label>
-      <input type="text" value={ad.cta_text} onChange={(e) => setAd({ ...ad, cta_text: e.target.value })} />
+      <input type="text" value={ad.cta_text} onChange={(e) => updateAd(ad.id, 'cta_text', e.target.value)} />
     </div>
   </div>
 );
 
-const ResultsDisplay = ({ results }) => {
-  const winner = results.ad_a.score > results.ad_b.score ? 'A' : 'B';
-  return (
-    <div className="results-container-ab">
-      <h3>Simulation Results</h3>
-      <div className="results-grid">
-        <div className={`result-card ${winner === 'A' ? 'winner' : ''}`}>
-          <h4>Ad A Score: {results.ad_a.score}/100</h4>
-          <ul>{results.ad_a.reasons.map((r, i) => <li key={i}>{r}</li>)}</ul>
-        </div>
-        <div className={`result-card ${winner === 'B' ? 'winner' : ''}`}>
-          <h4>Ad B Score: {results.ad_b.score}/100</h4>
-          <ul>{results.ad_b.reasons.map((r, i) => <li key={i}>{r}</li>)}</ul>
-        </div>
-      </div>
-      <div className="winner-declaration">
-        Predicted Winner: <strong>Ad {winner}</strong>
-      </div>
-    </div>
-  );
-};
-
 export default function ABTestSimulator() {
-  const [adA, setAdA] = useState({ headline: 'Discover our new shoe collection', body_text: 'Comfort and style in every step.', cta_text: 'Learn More' });
-  const [adB, setAdB] =  useState({ headline: 'Shoe sale! Get yours now?', body_text: 'Limited time sale on our new collection.', cta_text: 'Shop Now' });
+  const [ads, setAds] = useState([
+    { id: 1, headline: 'Discover our new shoe collection', body_text: 'Comfort and style in every step.', cta_text: 'Learn More' },
+    { id: 2, headline: 'Shoe sale! Get yours now?', body_text: 'Limited time sale on our new collection.', cta_text: 'Shop Now' },
+  ]);
   const [results, setResults] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const addAd = () => {
+    setAds([...ads, { id: Date.now(), headline: '', body_text: '', cta_text: '' }]);
+  };
+
+  const updateAd = (id, field, value) => {
+    setAds(ads.map(ad => ad.id === id ? { ...ad, [field]: value } : ad));
+  };
+
+  const removeAd = (id) => {
+    if (ads.length > 2) { // Keep a minimum of 2 variations
+      setAds(ads.filter(ad => ad.id !== id));
+    }
+  };
 
   const handleSimulate = async () => {
     setIsLoading(true);
@@ -55,28 +52,56 @@ export default function ABTestSimulator() {
       const response = await fetch('http://127.0.0.1:8000/api/simulate-ab-test', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ad_a: adA, ad_b: adB })
+        body: JSON.stringify({ ads: ads }) // Send the array of ads
       });
       const data = await response.json();
-      setResults(data);
+      setResults(data.predictions);
     } catch (error) {
       console.error("A/B test simulation failed:", error);
     } finally {
       setIsLoading(false);
     }
   };
+  
+  const getWinnerIndex = () => {
+    if (!results || results.length === 0) return -1;
+    return results.reduce((maxIndex, result, currentIndex, arr) => 
+      result.score > arr[maxIndex].score ? currentIndex : maxIndex, 0);
+  };
+  const winnerIndex = getWinnerIndex();
 
   return (
     <div className="ab-simulator-container">
       <div className="ad-input-grid">
-        <AdInputColumn ad={adA} setAd={setAdA} title="Ad Variation A" />
-        <AdInputColumn ad={adB} setAd={setAdB} title="Ad Variation B" />
+        {ads.map((ad, index) => (
+          <AdInputColumn key={ad.id} ad={{...ad, index}} updateAd={updateAd} removeAd={removeAd} />
+        ))}
       </div>
-      <button onClick={handleSimulate} disabled={isLoading} className="simulate-button">
-        {isLoading ? 'Simulating...' : 'Run A/B Test Simulation'}
-      </button>
+      <div className="actions-row">
+        <button onClick={addAd} className="add-variation-btn">+ Add another variation</button>
+        <button onClick={handleSimulate} disabled={isLoading} className="simulate-button">
+          {isLoading ? 'Simulating...' : 'Run Simulation'}
+        </button>
+      </div>
+      
       {isLoading && <div className="loader"></div>}
-      {results && <ResultsDisplay results={results} />}
+      
+      {results && (
+        <div className="results-container-ab">
+          <h3>Simulation Results</h3>
+          <div className="results-grid">
+            {results.map((result, index) => (
+              <div key={index} className={`result-card ${index === winnerIndex ? 'winner' : ''}`}>
+                <h4>Variation {String.fromCharCode(65 + index)} Score: {result.score}/100</h4>
+                <ul>{result.reasons.map((r, i) => <li key={i}>{r}</li>)}</ul>
+              </div>
+            ))}
+          </div>
+          <div className="winner-declaration">
+            Predicted Winner: <strong>Variation {String.fromCharCode(65 + winnerIndex)}</strong>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

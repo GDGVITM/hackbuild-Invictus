@@ -47,8 +47,7 @@ class ProductDescription(BaseModel):
 class ChatRequest(BaseModel):
     message: str
 class ABTestRequest(BaseModel):
-    ad_a: AdVariation
-    ad_b: AdVariation
+    ads: List[AdVariation]
 
 # --- API Endpoints ---
 @app.post("/api/discover-competitors")
@@ -104,9 +103,12 @@ def chat_with_assistant(request: ChatRequest):
 
 @app.post("/api/simulate-ab-test")
 def simulate_ab_test_endpoint(request: ABTestRequest):
-    prediction_a = predict_ad_performance(request.ad_a)
-    prediction_b = predict_ad_performance(request.ad_b)
-    return {
-        "ad_a": prediction_a,
-        "ad_b": prediction_b
-    }
+    """
+    Receives a list of ad variations and returns a predicted score for each.
+    """
+    predictions = []
+    for ad in request.ads:
+        prediction = predict_ad_performance(ad)
+        predictions.append(prediction)
+    
+    return {"predictions": predictions}
